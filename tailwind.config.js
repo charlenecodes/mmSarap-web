@@ -6,7 +6,14 @@ export default {
     "./src/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        tropical: "#3A865A",
+      },
+      borderRadius: {
+        DEFAULT: "20px",
+      },
+    },
   },
   plugins: [],
 };
