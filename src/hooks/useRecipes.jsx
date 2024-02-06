@@ -3,7 +3,6 @@ import axios from "axios";
 
 const useRecipes = () => {
   const [allRecipes, setAllRecipes] = useState([]);
-  const [userRecipes, setUserRecipes] = useState([]);
 
   async function getAllRecipes() {
     try {
@@ -22,8 +21,6 @@ const useRecipes = () => {
   return {
     allRecipes,
     setAllRecipes,
-    userRecipes,
-    setUserRecipes,
   };
 };
 

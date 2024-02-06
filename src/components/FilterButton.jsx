@@ -5,7 +5,7 @@ const FilterButton = ({ cuisineSelected, setCuisineSelected }) => {
   const { allCuisines } = useCuisines();
 
   return (
-    <div className="flex flex-row flex-wrap gap-1">
+    <div className="flex flex-row flex-wrap gap-1 justify-center">
       {cuisineSelected && (
         <button
           className="text-white bg-tropical font-medium border border-1 border-tropical rounded-full px-3"
@@ -23,7 +23,7 @@ const FilterButton = ({ cuisineSelected, setCuisineSelected }) => {
             <button
               onClick={() => setCuisineSelected(cuisine)}
               className={
-                "text-tropical font-medium border border-1 border-tropical rounded-full px-5"
+                "text-tropical  font-medium border border-1 border-tropical rounded-full px-5"
               }
               key={cuisine}
             >

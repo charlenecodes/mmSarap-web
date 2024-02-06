@@ -1,6 +1,6 @@
 import React from "react";
 
-const Favorites = () => {
+const Favorites = ({ toggleFavorite }) => {
   return (
     <>
       <p className="flex items-center justify-center text-4xl font-semibold text-orange-400">

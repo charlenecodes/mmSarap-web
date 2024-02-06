@@ -1,33 +1,32 @@
-import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import axios from "axios";
-import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate();
-  const { setIsLoggedIn, setCurrentUser } = useContext(AuthContext);
   const [error, setError] = useState(null);
-
-  const [loginDetails, setLoginDetails] = useState({
+  const [registration, setRegistration] = useState({
     username: "",
+    name: "",
+    email: "",
     password: "",
   });
 
   const handleChange = (e) => {
-    setLoginDetails({
-      ...loginDetails,
+    setRegistration({
+      ...registration,
       [e.target.name]: e.target.value,
     });
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    let data = JSON.stringify(loginDetails);
+    let data = JSON.stringify(registration);
 
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: `http://localhost:3000/login`,
+      url: `http://localhost:3000/register`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -38,28 +37,42 @@ const Login = () => {
       .request(config)
       .then((response) => {
         // object of the user info is in response.data
-        setCurrentUser(response.data.currentUser);
-        navigate(`/`);
-        setIsLoggedIn(true);
+        console.log(response.data);
+        navigate(`/login`);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response.data.error);
         setError(error.response.data.error);
       });
   };
-
   return (
     <div>
-      <div className="flex flex-col text-center">
-        <p className="text-4xl font-semibold text-orange-400 mb-4">Log In</p>
+      <div>
+        <p className="flex justify-center text-4xl font-semibold text-orange-400 mb-4">
+          Register
+        </p>
       </div>
       <p className="text-red-900 text-center">{error !== null && error}</p>
-
       <div className="flex flex-col justify-center">
         <input
           onChange={(e) => handleChange(e)}
+          name={"name"}
+          value={registration.name}
+          className="text-xl text-gray-600 px-2 py-1 border border-solid rounded-md"
+          placeholder="name"
+        />
+        <input
+          onChange={(e) => handleChange(e)}
+          name={"email"}
+          type="email"
+          value={registration.email}
+          className="text-xl text-gray-600 px-2 py-1 border border-solid rounded-md my-2"
+          placeholder="email"
+        />
+        <input
+          onChange={(e) => handleChange(e)}
           name={"username"}
-          value={loginDetails.username}
+          value={registration.username}
           className="text-xl text-gray-600 px-2 py-1 border border-solid rounded-md"
           placeholder="username"
         />
@@ -67,17 +80,10 @@ const Login = () => {
           onChange={(e) => handleChange(e)}
           name={"password"}
           type="password"
-          value={loginDetails.password}
+          value={registration.password}
           className="text-xl text-gray-600 px-2 py-1 border border-solid rounded-md my-2"
           placeholder="password"
         />
-        <button
-          className="flex flex-row space-x-1"
-          onClick={() => navigate("/register")}
-        >
-          <p>No account?</p>
-          <p className="text-tropical font-semibold">Register</p>
-        </button>
       </div>
 
       <div className="flex justify-center items-center">
@@ -85,11 +91,11 @@ const Login = () => {
           onClick={onSubmit}
           className="my-3  text-tropical text-2xl hover:text-white hover:bg-tropical font-normal border border-1 border-tropical rounded-full px-5"
         >
-          Log in
+          Register
         </button>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Register;

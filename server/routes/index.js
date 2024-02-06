@@ -3,10 +3,9 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const os = require("os");
-
-// * IMPORTANT to be able to use mongoose queries
+const Recipe = require("../models/Recipe");
 const User = require("../models/User");
+const Favorites = require("../models/Favorites");
 
 // ^ MIDDLEWARE
 // need to be with the function keyword, otherwise it doesn't work
@@ -33,7 +32,7 @@ async function checkIfUsernameExists(req, res, next) {
     next();
   } else {
     console.log("Username exists");
-    res.status(404).send({ error: "Invalid username!" });
+    res.status(404).send({ error: "Username already exists!" });
   }
 }
 
@@ -87,12 +86,41 @@ router.post("/login", async (req, res) => {
             email: user.email,
           },
         });
-      else res.status(404).send({ error: "Invalid password!" });
+      else res.status(404).send({ error: "Check password!" });
     } else {
-      res.status(404).send({ error: "Invalid username!" });
+      res.status(404).send({ error: "Check username!" });
     }
   } catch (err) {
     res.status(404).send({ error: err.message });
+  }
+});
+
+// ^ POST add favorites by username
+router.get("/favorites/:username/", async function (req, res) {
+  const { username } = req.params;
+
+  try {
+    // query to use the username to get the user id once you have the user id use it to create a document
+    let user = await User.find().where("username").equals(username);
+    console.log(user[0]._id, "from API call");
+    res.send(user);
+  } catch (err) {
+    res.status(404).send({ message: err.message });
+  }
+});
+
+// ^ GET favorites by username
+// favorites is accessed by the profile so the fn that takes care of favorite should be put there
+router.get("/favorites/:username/", async function (req, res) {
+  const { username, id } = req.params;
+
+  try {
+    // query to use the username to get the user id once you have the user id use it to create a document
+    let user = await User.find().where("username").equals(username);
+    console.log(user[0]._id, "from API call");
+    res.send(user);
+  } catch (err) {
+    res.status(404).send({ message: err.message });
   }
 });
 

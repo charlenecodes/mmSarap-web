@@ -1,69 +1,50 @@
-import { useState } from "react";
-import useRecipes from "../hooks/useRecipes";
+import RecipeCard from "../components/RecipeCard";
 import FilterButton from "../components/FilterButton";
-import { useNavigate } from "react-router-dom";
+import useRecipes from "../hooks/useRecipes";
 
-const Recipes = ({ cuisineSelected, setCuisineSelected }) => {
+const Recipes = ({ cuisineSelected, setCuisineSelected, toggleFavorite }) => {
   const { allRecipes } = useRecipes();
-  const navigate = useNavigate();
 
   return (
     <>
+      {/* header */}
       {cuisineSelected ? (
-        <p className="flex items-center justify-center text-4xl font-semibold text-orange-400">
+        <h1 className="flex items-center justify-center text-4xl font-semibold text-orange-400">
           {cuisineSelected} Recipes
-        </p>
+        </h1>
       ) : (
-        <p className="flex items-center justify-center text-4xl font-semibold text-orange-400">
+        <h1 className="flex items-center justify-center text-4xl font-semibold text-orange-400">
           All Recipes
-        </p>
+        </h1>
       )}
-      <div className="mx-10 mt-10 flex flex-wrap">
+      <div className="mx-10 mt-3 md:mt-10">
         <FilterButton
           cuisineSelected={cuisineSelected}
           setCuisineSelected={setCuisineSelected}
         />
       </div>
 
-      {cuisineSelected && (
-        <div className="mx-10 my-3 flex flex-wrap justify-start">
-          {allRecipes
-            ?.filter((recipe) => recipe.cuisine === cuisineSelected)
-            .map((recipe, index) => {
-              return (
-                <button
-                  key={index}
-                  className="flex m-2 rounded-tr size-40 justify-center items-center bg-tropical text-white font-medium"
-                  onClick={() =>
-                    navigate("recipe/:id", {
-                      recipe: recipe,
-                    })
-                  }
-                >
-                  {recipe.dishName[0].toUpperCase() +
-                    recipe.dishName.substring(1)}
-                </button>
-              );
-            })}
-        </div>
-      )}
+      {!cuisineSelected &&
+        allRecipes?.map((recipe) => {
+          return (
+            <div key={recipe._id}>
+              <RecipeCard recipe={recipe} toggleFavorite={toggleFavorite} />
+            </div>
+          );
+        })}
 
-      {!cuisineSelected && (
-        <div className="mx-10 my-3 flex flex-wrap justify-start">
-          {allRecipes?.map((recipe, index) => {
+      {cuisineSelected &&
+        allRecipes
+          ?.filter((recipe) => recipe.cuisine === cuisineSelected)
+          .map((recipe) => {
             return (
-              <button
-                key={index}
-                className="flex m-2 rounded-tr size-40 justify-center items-center bg-tropical text-white font-medium"
-                onClick={() => console.log(recipe)}
-              >
-                {recipe.dishName[0].toUpperCase() +
-                  recipe.dishName.substring(1)}
-              </button>
+              <RecipeCard
+                key={recipe._id}
+                recipe={recipe}
+                toggleFavorite={toggleFavorite}
+              />
             );
           })}
-        </div>
-      )}
     </>
   );
 };
