@@ -17,34 +17,35 @@ const Recipes = ({ cuisineSelected, setCuisineSelected, toggleFavorite }) => {
           All Recipes
         </h1>
       )}
-      <div className="mx-10 mt-3 md:mt-10">
+      <div className="mx-5 mt-3 md:mt-10">
         <FilterButton
           cuisineSelected={cuisineSelected}
           setCuisineSelected={setCuisineSelected}
         />
       </div>
-
-      {!cuisineSelected &&
-        allRecipes?.map((recipe) => {
-          return (
-            <div key={recipe._id}>
-              <RecipeCard recipe={recipe} toggleFavorite={toggleFavorite} />
-            </div>
-          );
-        })}
-
-      {cuisineSelected &&
-        allRecipes
-          ?.filter((recipe) => recipe.cuisine === cuisineSelected)
-          .map((recipe) => {
+      <div className="flex flex-col sm:flex-row flex-wrap justify-center">
+        {!cuisineSelected &&
+          allRecipes?.map((recipe) => {
             return (
-              <RecipeCard
-                key={recipe._id}
-                recipe={recipe}
-                toggleFavorite={toggleFavorite}
-              />
+              <div key={recipe._id}>
+                <RecipeCard recipe={recipe} toggleFavorite={toggleFavorite} />
+              </div>
             );
           })}
+
+        {cuisineSelected &&
+          allRecipes
+            ?.filter((recipe) => recipe.cuisine === cuisineSelected)
+            .map((recipe) => {
+              return (
+                <RecipeCard
+                  key={recipe._id}
+                  recipe={recipe}
+                  toggleFavorite={toggleFavorite}
+                />
+              );
+            })}
+      </div>
     </>
   );
 };

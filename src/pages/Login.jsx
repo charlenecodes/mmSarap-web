@@ -51,11 +51,11 @@ const Login = () => {
   return (
     <div>
       <div className="flex flex-col text-center">
-        <p className="text-4xl font-semibold text-orange-400 mb-4">Log In</p>
+        <h1 className="text-4xl font-semibold text-orange-400 mb-4">Log In</h1>
       </div>
       <p className="text-red-900 text-center">{error !== null && error}</p>
 
-      <div className="flex flex-col justify-center">
+      <div className="flex flex-col justify-center mx-10 lg:mx-72 xl:mx-96">
         <input
           onChange={(e) => handleChange(e)}
           name={"username"}
@@ -72,7 +72,7 @@ const Login = () => {
           placeholder="password"
         />
         <button
-          className="flex flex-row space-x-1"
+          className="flex flex-row space-x-1 justify-end mx-1"
           onClick={() => navigate("/register")}
         >
           <p>No account?</p>

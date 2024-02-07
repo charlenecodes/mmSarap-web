@@ -53,7 +53,7 @@ const Register = () => {
         </p>
       </div>
       <p className="text-red-900 text-center">{error !== null && error}</p>
-      <div className="flex flex-col justify-center">
+      <div className="flex flex-col justify-center mx-10 lg:mx-72 xl:mx-96">
         <input
           onChange={(e) => handleChange(e)}
           name={"name"}

@@ -1,17 +1,19 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { FaRegHeart } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { FaTrashAlt } from "react-icons/fa";
 
 // create different styles for when the user is or isn't logged in - when the heart is there and isn't there
-const RecipeCard = ({ recipe, toggleFavorite }) => {
+const RecipeCard = ({ icon, recipe, toggleFavorite }) => {
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <div>
-      <div className="mx-10 my-3 md:flex justify-center">
-        <div key={recipe._id} className="m-2">
+      <div className="mx-2 my-3 md:flex justify-center">
+        <div className="m-2">
           <div
             className="bg-white rounded-xl shadow-md overflow-hidden"
             onClick={() =>
@@ -22,7 +24,7 @@ const RecipeCard = ({ recipe, toggleFavorite }) => {
           >
             <div>
               <img
-                className="h-48 w-full object-cover"
+                className="h-40 md:h-60 w-full object-cover"
                 src="https://images.pexels.com/photos/1132047/pexels-photo-1132047.jpeg?auto=compress&cs=tinysrgb&w=800"
               />
             </div>
@@ -33,16 +35,33 @@ const RecipeCard = ({ recipe, toggleFavorite }) => {
                   {recipe.dishName[0].toUpperCase() +
                     recipe.dishName.substring(1)}
                 </p>
-                {currentUser.username && (
-                  <FaRegHeart
-                    className="text-tropical text-2xl"
-                    onClick={(e) => {
-                      toggleFavorite();
-                      console.log("favorite", recipe);
-                      e.stopPropagation();
-                    }}
-                  />
-                )}
+                <div className="flex flex-row items-center">
+                  {currentUser.username &&
+                    location.pathname !==
+                      `/profile/${currentUser.username}` && (
+                      <FaRegHeart
+                        className="text-tropical text-2xl"
+                        onClick={(e) => {
+                          toggleFavorite();
+                          console.log("favorite", recipe);
+                          e.stopPropagation();
+                        }}
+                      />
+                    )}
+
+                  {currentUser.username &&
+                    location.pathname ===
+                      `/profile/${currentUser.username}` && (
+                      <FaTrashAlt
+                        className="text-tropical self-start m-2 text-xl"
+                        onClick={(e) => {
+                          console.log("delete", recipe);
+                          deleteRecipe(recipe._id, recipe.dishName);
+                          e.stopPropagation();
+                        }}
+                      />
+                    )}
+                </div>
               </div>
               <p
                 onClick={(e) => {

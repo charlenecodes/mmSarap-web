@@ -6,6 +6,7 @@ import useRecipes from "../hooks/useRecipes";
 import { useNavigate } from "react-router-dom";
 import useCuisines from "../hooks/useCuisines";
 import { BiSolidMessageSquareAdd } from "react-icons/bi";
+import RecipeCard from "../components/RecipeCard";
 
 const Profile = ({ toggleFavorite }) => {
   const { currentUser } = useContext(AuthContext);
@@ -40,29 +41,12 @@ const Profile = ({ toggleFavorite }) => {
       {userRecipes.length !== 0 ? (
         userRecipes.map((recipe) => {
           return (
-            <div className="mx-10 my-3 flex flex-wrap justify-start">
-              <button
+            <div className="flex md:flex-row justify-center flex-col">
+              <RecipeCard
                 key={recipe._id}
-                className="flex flex-col text-wrap m-2 rounded-tr size-40 justify-between bg-tropical"
-                onClick={() =>
-                  navigate(`/recipes/${recipe._id}`, {
-                    state: { recipe },
-                  })
-                }
-              >
-                <p className=" text-white font-medium self-center">
-                  {recipe.dishName[0].toUpperCase() +
-                    recipe.dishName.substring(1)}
-                </p>
-                <FaTrashAlt
-                  className="text-white self-start m-2 text-xl"
-                  onClick={(e) => {
-                    console.log("delete", recipe);
-                    deleteRecipe(recipe._id, recipe.dishName);
-                    e.stopPropagation();
-                  }}
-                />
-              </button>
+                recipe={recipe}
+                toggleFavorite={toggleFavorite}
+              />
             </div>
           );
         })

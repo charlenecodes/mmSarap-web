@@ -83,7 +83,10 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="recipes/:id" element={<RecipeDetails />} />
-          <Route path="user/:username" element={<PublicProfile />} />
+          <Route
+            path="user/:username"
+            element={<PublicProfile toggleFavorite={toggleFavorite} />}
+          />
 
           {/* private routes only visible for logged in users */}
           <Route element={<PrivateRoutes isLoggedIn={isLoggedIn} />}>
