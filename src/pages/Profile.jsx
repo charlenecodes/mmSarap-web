@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { FaTrashAlt } from "react-icons/fa";
 import axios from "axios";
 import useRecipes from "../hooks/useRecipes";
 import { useNavigate } from "react-router-dom";
@@ -28,39 +27,40 @@ const Profile = ({ toggleFavorite }) => {
         });
     } catch (err) {
       console.error({
-        error: `${err.message}, error deleting ${dish}, from Recipes.jsx`,
+        error: `${err.message}, error deleting ${dish}, from Profile.jsx`,
       });
     }
   }
+
   return (
     <>
       <p className="flex items-center justify-center text-4xl font-semibold text-orange-400">
         Profile
       </p>
-
-      {userRecipes.length !== 0 ? (
-        userRecipes.map((recipe) => {
-          return (
-            <div className="flex md:flex-row justify-center flex-col">
+      <div className="flex flex-col sm:flex-row flex-wrap justify-center">
+        {userRecipes.length !== 0 ? (
+          userRecipes.map((recipe) => {
+            return (
               <RecipeCard
                 key={recipe._id}
                 recipe={recipe}
+                deleteRecipe={deleteRecipe}
                 toggleFavorite={toggleFavorite}
               />
-            </div>
-          );
-        })
-      ) : (
-        <div className="flex flex-col justify-center items-center m-5">
-          <BiSolidMessageSquareAdd
-            className="text-4xl text-tropical"
-            onClick={() => {
-              navigate(`/addrecipe`);
-            }}
-          />
-          <p className="text-zinc-700">Click to add a Recipe</p>
-        </div>
-      )}
+            );
+          })
+        ) : (
+          <div className="flex flex-col items-center m-3 space-y-1 justify-center">
+            <BiSolidMessageSquareAdd
+              className="text-4xl text-tropical"
+              onClick={() => {
+                navigate(`/addrecipe`);
+              }}
+            />
+            <p className="text-zinc-700">Click to add a Recipe</p>
+          </div>
+        )}
+      </div>
     </>
   );
 };

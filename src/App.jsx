@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import Home from "./pages/Home";
@@ -28,28 +28,45 @@ function App() {
   // ^ CUISINE FILTER
   const [cuisineSelected, setCuisineSelected] = useState(null);
 
-  async function toggleFavorite() {
-    // we want to pass the userId and the recipeId because these are what we will use in order to populate the data on the DB and connect it to the
+  const [favorites, setFavorites] = useState([]);
+  // ^ userFavorites needs to be sent/fetched from the DB
+  const [userFavorites, setUserFavorites] = useState({
+    id: "",
+    favorites: favorites,
+  });
+
+  const addToFavorites = (recipe, userId) => {
+    setFavorites([recipe, ...favorites]);
+    setUserFavorites({
+      id: userId,
+      favorites: favorites,
+    });
+  };
+
+  const removeFromFavorites = (recipe, userId) => {
+    setFavorites(favorites.filter((favorite) => favorite !== recipe));
+    setUserFavorites({
+      id: userId,
+      favorites: favorites.filter((favorite) => favorite !== recipe),
+    });
+  };
+
+  async function toggleFavorite(recipe, userId) {
     try {
-      <FaHeart className="text-red" />;
-      // check if the recipe is already in the DB
-      // ^ if in DB, delete from favorites, change the icon
-      // ^ else add to favorites, change the icon
-      // need the information of the currently logged in user as well to connect the information
-      // send ${currentUser.username} to the backend and find the user that has a match - this means only logged in users can favorites
-      // use the information from the recipes and user collections in order to create the favorites collection
+      if (!favorites.some((favorite) => favorite === recipe)) {
+        addToFavorites(recipe, userId);
+      } else {
+        removeFromFavorites(recipe, userId);
+      }
     } catch (err) {
       console.error({
-        error: `${err.message}, error adding ${recipe.dishName} to favorites, Recipes.jsx`,
+        error: `${err.message}, error adding to favorites, App.jsx`,
       });
     }
   }
-  toggleFavorite();
-  // toggleFavorite is being passed to a few components
 
   return (
     <>
-      {/* needs to be double brackets, prettify made it with parentheses inside the curly brackets */}
       <AuthContext.Provider
         value={{
           isLoggedIn,
@@ -57,6 +74,7 @@ function App() {
           currentUser,
           setCurrentUser,
           logout,
+          favorites,
         }}
       >
         <NavBar />

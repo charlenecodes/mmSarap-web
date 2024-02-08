@@ -12,7 +12,9 @@ const FilterButton = ({ cuisineSelected, setCuisineSelected }) => {
           onClick={() => setCuisineSelected(null)}
         >
           <div className="flex flex-row justify-center items-center gap-2 pl-1">
-            <p>{cuisineSelected}</p>
+            <p>
+              {cuisineSelected[0].toUpperCase() + cuisineSelected.substring(1)}
+            </p>
             <MdClose />
           </div>
         </button>
@@ -27,7 +29,7 @@ const FilterButton = ({ cuisineSelected, setCuisineSelected }) => {
               }
               key={cuisine}
             >
-              {cuisine}
+              {cuisine[0].toUpperCase() + cuisine.substring(1)}
             </button>
           );
         })}

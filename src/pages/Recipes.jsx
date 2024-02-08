@@ -10,7 +10,8 @@ const Recipes = ({ cuisineSelected, setCuisineSelected, toggleFavorite }) => {
       {/* header */}
       {cuisineSelected ? (
         <h1 className="flex items-center justify-center text-4xl font-semibold text-orange-400">
-          {cuisineSelected} Recipes
+          {cuisineSelected[0].toUpperCase() + cuisineSelected.substring(1)}{" "}
+          Recipes
         </h1>
       ) : (
         <h1 className="flex items-center justify-center text-4xl font-semibold text-orange-400">
@@ -23,6 +24,7 @@ const Recipes = ({ cuisineSelected, setCuisineSelected, toggleFavorite }) => {
           setCuisineSelected={setCuisineSelected}
         />
       </div>
+
       <div className="flex flex-col sm:flex-row flex-wrap justify-center">
         {!cuisineSelected &&
           allRecipes?.map((recipe) => {
