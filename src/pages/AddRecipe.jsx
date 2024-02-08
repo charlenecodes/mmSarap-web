@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import useCuisines from "../hooks/useCuisines";
+import RecipeCard from "../components/RecipeCard";
+import Button from "../components/Button";
 
 const AddRecipe = () => {
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ const AddRecipe = () => {
     });
   };
 
-  const { setAllRecipes, setCuisines } = useRecipes();
+  const { setAllRecipes } = useRecipes();
 
   const onSubmit = () => {
     async function addRecipe() {
@@ -73,7 +75,7 @@ const AddRecipe = () => {
         Add Recipe
       </p>
 
-      <div className="flex flex-col justify-center m-2">
+      <div className="flex flex-col justify-center m-2 mx-20 md:mx-60">
         <label className="text-tropical opacity-85 font-semibold text-center">
           Dish name
         </label>
@@ -118,15 +120,7 @@ const AddRecipe = () => {
           className="text-xl text-gray-600 px-2 py-1 border border-solid rounded-md mb-1"
         />
       </div>
-
-      <div className="flex justify-center items-center">
-        <button
-          onClick={onSubmit}
-          className="my-3  text-tropical text-2xl hover:text-white hover:bg-tropical font-normal border border-1 border-tropical rounded-full px-5"
-        >
-          Submit
-        </button>
-      </div>
+      <Button text={"Submit"} onClick={onSubmit} />
     </>
   );
 };

@@ -1,9 +1,11 @@
 import React from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { RxDotFilled } from "react-icons/rx";
 
 const RecipeDetails = () => {
   const { state } = useLocation();
+  const navigate = useNavigate();
+
   return (
     <div>
       <p className="flex items-center justify-center text-4xl font-semibold text-orange-400">
@@ -12,7 +14,16 @@ const RecipeDetails = () => {
       </p>
       <div className="flex justify-center space-x-1 text-2xl font-semibold xl:mt-3">
         <span className="text-gray-600">by</span>
-        <span className=" text-tropical hover:overline hover:decoration-wavy">
+        <span
+          onClick={() => {
+            navigate(`/user/${state.recipe.addedBy}`, {
+              state: {
+                user: state.recipe.addedBy,
+              },
+            });
+          }}
+          className=" text-tropical hover:overline hover:decoration-wavy"
+        >
           {state.recipe.addedBy}
         </span>
       </div>
@@ -45,7 +56,6 @@ const RecipeDetails = () => {
                 key={index}
                 className="flex flex-row space-x-1 mx-5  text-gray-700"
               >
-                {/* <RxDotFilled /> */}
                 <p>{index + 1}. </p>
                 <p>{instruction[0].toUpperCase() + instruction.substring(1)}</p>
               </div>

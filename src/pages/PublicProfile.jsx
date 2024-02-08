@@ -11,7 +11,7 @@ const PublicProfile = ({ toggleFavorite }) => {
     <div>
       <div className="flex flex-col text-center">
         <h1 className="text-4xl font-semibold text-orange-400 mb-4">
-          Recipes by @{state.user}
+          Recipes by @{state?.user}
         </h1>
       </div>
       <div className="flex md:flex-row justify-center flex-col">
