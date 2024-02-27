@@ -36,6 +36,11 @@ async function checkIfUsernameExists(req, res, next) {
   }
 }
 
+router.get("/", async function (req, res) {
+  res.send("mmSarap by Charlene");
+
+});
+
 // ^ POST register a user
 router.post(
   "/register",
