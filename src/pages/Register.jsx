@@ -26,7 +26,7 @@ const Register = () => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: `http://localhost:3000/register`,
+      url: `https://mmsarap.onrender.com/register`,
       headers: {
         "Content-Type": "application/json",
       },

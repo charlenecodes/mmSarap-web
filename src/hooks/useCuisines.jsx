@@ -8,7 +8,7 @@ const useCuisines = () => {
     try {
       await axios
         // ^ DB is on Port3000
-        .get(`http://localhost:3000/recipes/cuisines`)
+        .get(`https://mmsarap.onrender.com/recipes/cuisines`)
         .then((res) => setAllCuisines(res.data));
     } catch (err) {
       console.error({ error: `Error in useCuisines.jsx ${err.message}` });
