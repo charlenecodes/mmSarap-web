@@ -35,7 +35,7 @@ const AddRecipe = () => {
       let config = {
         method: "post",
         maxBodyLength: Infinity,
-        url: `http://localhost:3000/recipes/${currentUser.username}/`,
+        url: `https://mmsarap.onrender.com/recipes/${currentUser.username}/`,
         headers: {
           "Content-Type": "application/json",
         },
