@@ -32,7 +32,7 @@ const RecipeCard = ({ recipe, toggleFavorite, deleteRecipe }) => {
 
             <div className="flex flex-col text-wrap mb-5 mt-3 mx-3">
               <div className="flex flex-row justify-between items-center">
-                <p className="text-tropical text-2xl font-semibold">
+                <p className="text-tropical text-2xl font-semibold truncate">
                   {recipe.dishName[0].toUpperCase() +
                     recipe.dishName.substring(1)}
                 </p>

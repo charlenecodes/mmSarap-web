@@ -19,7 +19,7 @@ const Profile = ({ toggleFavorite }) => {
   async function deleteRecipe(id, dish) {
     try {
       await axios
-        .delete(`http://localhost:3000/recipes/${id}/${currentUser.username}`)
+        .delete(`https://mmsarap.onrender.com/recipes/${id}/${currentUser.username}`)
         .then((res) => {
           // res.data.allRecipes returns ALL the recipes after the specific one was removed
           setAllRecipes(res.data.allRecipes);
